@@ -1,0 +1,17 @@
+﻿<configuration>
+    <system.serviceModel>
+        <bindings>
+            <basicHttpBinding>
+                <binding name="BasicHttpBinding_IGuestService" maxBufferSize="2147483647"
+                    maxReceivedMessageSize="2147483647">
+                    <security mode="None" />
+                </binding>
+            </basicHttpBinding>
+        </bindings>
+        <client>
+            <endpoint address="../GuestService.svc" binding="basicHttpBinding"
+                bindingConfiguration="BasicHttpBinding_IGuestService" contract="ServiceReference.IGuestService"
+                name="BasicHttpBinding_IGuestService" />
+        </client>
+    </system.serviceModel>
+</configuration>

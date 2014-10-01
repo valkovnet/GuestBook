@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="GuestBookModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="GuestBookModelStoreContainer" />
+        <Function Name="AddGuestRecord" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="username" Type="nvarchar" Mode="In" />
+          <Parameter Name="usermail" Type="nvarchar" Mode="In" />
+          <Parameter Name="messages" Type="text" Mode="In" />
+          <Parameter Name="homepage" Type="varchar" Mode="In" />
+          <Parameter Name="ipaddres" Type="varchar" Mode="In" />
+          <Parameter Name="useragent" Type="nvarchar" Mode="In" />
+          <Parameter Name="browsername" Type="nvarchar" Mode="In" />
+          <Parameter Name="browserversion" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetGuestRecords" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="from" Type="int" Mode="In" />
+          <Parameter Name="to" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetRecordsInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GuestBookModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="GuestBookEntities" p1:LazyLoadingEnabled="true" >
+          <FunctionImport Name="AddGuestRecord">
+            <Parameter Name="username" Mode="In" Type="String" />
+            <Parameter Name="usermail" Mode="In" Type="String" />
+            <Parameter Name="messages" Mode="In" Type="String" />
+            <Parameter Name="homepage" Mode="In" Type="String" />
+            <Parameter Name="ipaddres" Mode="In" Type="String" />
+            <Parameter Name="useragent" Mode="In" Type="String" />
+            <Parameter Name="browsername" Mode="In" Type="String" />
+            <Parameter Name="browserversion" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetRecordsInfo" ReturnType="Collection(Int32)" />
+          <FunctionImport Name="GetGuestRecords" ReturnType="Collection(GuestBookModel.GetGuestRecords_Result)">
+            <Parameter Name="from" Mode="In" Type="Int32" />
+            <Parameter Name="to" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="GetGuestRecords_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="UserMail" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Homepage" Nullable="true" MaxLength="512" />
+          <Property Type="DateTime" Name="PostDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Messages" Nullable="false" MaxLength="Max" />
+          <Property Type="String" Name="IpAddres" Nullable="false" MaxLength="10" />
+          <Property Type="Int32" Name="KBrowser" Nullable="false" />
+          <Property Type="Boolean" Name="IsDelete" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GuestBookModelStoreContainer" CdmEntityContainer="GuestBookEntities" >
+          <FunctionImportMapping FunctionImportName="AddGuestRecord" FunctionName="GuestBookModel.Store.AddGuestRecord" />
+          <FunctionImportMapping FunctionImportName="GetRecordsInfo" FunctionName="GuestBookModel.Store.GetRecordsInfo" />
+          <FunctionImportMapping FunctionImportName="GetGuestRecords" FunctionName="GuestBookModel.Store.GetGuestRecords">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GuestBookModel.GetGuestRecords_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserMail" ColumnName="UserMail" />
+                <ScalarProperty Name="Homepage" ColumnName="Homepage" />
+                <ScalarProperty Name="PostDate" ColumnName="PostDate" />
+                <ScalarProperty Name="Messages" ColumnName="Messages" />
+                <ScalarProperty Name="IpAddres" ColumnName="IpAddres" />
+                <ScalarProperty Name="KBrowser" ColumnName="KBrowser" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
