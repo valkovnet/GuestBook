@@ -13,11 +13,11 @@
   <wsdl:message name="IGuestService_GetRecordsInfo_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetRecordsInfoResponse" />
   </wsdl:message>
-  <wsdl:message name="IGuestService_GetGuestRecords_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetGuestRecords" />
+  <wsdl:message name="IGuestService_GetAllRecords_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllRecords" />
   </wsdl:message>
-  <wsdl:message name="IGuestService_GetGuestRecords_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetGuestRecordsResponse" />
+  <wsdl:message name="IGuestService_GetAllRecords_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllRecordsResponse" />
   </wsdl:message>
   <wsdl:message name="IGuestService_AddRecord_InputMessage">
     <wsdl:part name="parameters" element="tns:AddRecord" />
@@ -30,9 +30,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IGuestService/GetRecordsInfo" message="tns:IGuestService_GetRecordsInfo_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IGuestService/GetRecordsInfoResponse" message="tns:IGuestService_GetRecordsInfo_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetGuestRecords">
-      <wsdl:input wsaw:Action="http://tempuri.org/IGuestService/GetGuestRecords" message="tns:IGuestService_GetGuestRecords_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IGuestService/GetGuestRecordsResponse" message="tns:IGuestService_GetGuestRecords_OutputMessage" />
+    <wsdl:operation name="GetAllRecords">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGuestService/GetAllRecords" message="tns:IGuestService_GetAllRecords_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGuestService/GetAllRecordsResponse" message="tns:IGuestService_GetAllRecords_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="AddRecord">
       <wsdl:input wsaw:Action="http://tempuri.org/IGuestService/AddRecord" message="tns:IGuestService_AddRecord_InputMessage" />
@@ -50,8 +50,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetGuestRecords">
-      <soap:operation soapAction="http://tempuri.org/IGuestService/GetGuestRecords" style="document" />
+    <wsdl:operation name="GetAllRecords">
+      <soap:operation soapAction="http://tempuri.org/IGuestService/GetAllRecords" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

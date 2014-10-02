@@ -10,8 +10,8 @@ namespace GuestBook.TestTask
         [OperationContract(Name = "GetRecordsInfo")]
         int GetRecordsInfo();
 
-        [OperationContract(Name = "GetGuestRecords")]
-        List<GuestRecord> GetGuestRecords(int from, int to);
+        [OperationContract(Name = "GetAllRecords")]
+        List<GuestRecord> GetAllRecords();
 
         [OperationContract(Name = "AddRecord")]
         void AddRecord(string key, GuestRecord record);

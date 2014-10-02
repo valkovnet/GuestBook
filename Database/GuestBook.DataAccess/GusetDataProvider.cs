@@ -61,5 +61,26 @@ namespace GuestBook.DataAccess
                 throw new DatabaseException("Can't add the record to guest book", ex);
             }
         }
+
+        public List<GuestRecord> GetAllRecords()
+        {
+            try
+            {
+                var resultset = new List<GuestRecord>();
+                using (var entity = new GuestBookEntities())
+                {
+                    resultset.AddRange(entity.GetAllRecords().Select(record => new GuestRecord
+                        {
+                            UserName = record.UserName, UserMail = record.UserMail, Messages = record.Messages, PostedDate = record.PostDate
+                        }));
+                }
+
+                return resultset;
+            }
+            catch (Exception ex)
+            {
+                throw new DatabaseException("Can't add the record to guest book", ex);
+            }
+        }
     }
 }

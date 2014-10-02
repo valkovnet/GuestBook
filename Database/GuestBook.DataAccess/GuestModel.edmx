@@ -16,6 +16,7 @@
           <Parameter Name="browsername" Type="nvarchar" Mode="In" />
           <Parameter Name="browserversion" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="GetAllRecords" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetGuestRecords" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="from" Type="int" Mode="In" />
           <Parameter Name="to" Type="int" Mode="In" />
@@ -41,8 +42,20 @@
             <Parameter Name="from" Mode="In" Type="Int32" />
             <Parameter Name="to" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="GetAllRecords" ReturnType="Collection(GuestBookModel.GetAllRecords_Result)" />
         </EntityContainer>
         <ComplexType Name="GetGuestRecords_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="UserMail" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Homepage" Nullable="true" MaxLength="512" />
+          <Property Type="DateTime" Name="PostDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Messages" Nullable="false" MaxLength="Max" />
+          <Property Type="String" Name="IpAddres" Nullable="false" MaxLength="10" />
+          <Property Type="Int32" Name="KBrowser" Nullable="false" />
+          <Property Type="Boolean" Name="IsDelete" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetAllRecords_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
           <Property Type="String" Name="UserName" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="UserMail" Nullable="false" MaxLength="255" />
@@ -64,6 +77,21 @@
           <FunctionImportMapping FunctionImportName="GetGuestRecords" FunctionName="GuestBookModel.Store.GetGuestRecords">
             <ResultMapping>
               <ComplexTypeMapping TypeName="GuestBookModel.GetGuestRecords_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserMail" ColumnName="UserMail" />
+                <ScalarProperty Name="Homepage" ColumnName="Homepage" />
+                <ScalarProperty Name="PostDate" ColumnName="PostDate" />
+                <ScalarProperty Name="Messages" ColumnName="Messages" />
+                <ScalarProperty Name="IpAddres" ColumnName="IpAddres" />
+                <ScalarProperty Name="KBrowser" ColumnName="KBrowser" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAllRecords" FunctionName="GuestBookModel.Store.GetAllRecords">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GuestBookModel.GetAllRecords_Result">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="UserMail" ColumnName="UserMail" />

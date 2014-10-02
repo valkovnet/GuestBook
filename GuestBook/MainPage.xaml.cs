@@ -14,12 +14,19 @@ namespace GuestBook
             ServiceProvider.Instance.AddRecordCompleted += OnAddRecordCompleted;
             ServiceProvider.Instance.GetRecordsInfoCompleted += (sender, e) =>
                 {
-                    if (e.Error == null && e.Result > 0)
+                    if (e.Error == null)
                     {
-                        ServiceProvider.Instance.GetGuestRecordsAsync(0, 25);
+                        if (e.Result > 0)
+                        {
+                            ServiceProvider.Instance.GetAllRecordsAsync();
+                        }
+                        else
+                        {
+                            IsProcess = false;
+                        }
                     }
                 };
-            ServiceProvider.Instance.GetGuestRecordsCompleted += (sender, e) =>
+            ServiceProvider.Instance.GetAllRecordsCompleted += (sender, e) =>
                 {
                     if (e.Error == null)
                     {
@@ -31,7 +38,7 @@ namespace GuestBook
             ServiceProvider.Instance.GetRecordsInfoAsync();
         }
         
-        #region Public Properties        
+        #region Public Properties
 
         public static readonly DependencyProperty ModelProperty =
             DependencyProperty.Register("ModelProperty", typeof(GuestModel), typeof(MainPage), new PropertyMetadata(new GuestModel()));
@@ -59,7 +66,7 @@ namespace GuestBook
         {
             if (e.Error == null)
             {
-                ServiceProvider.Instance.GetGuestRecordsAsync(0, 25);
+                ServiceProvider.Instance.GetAllRecordsAsync();
                 Model.ClearData();
             }
         }

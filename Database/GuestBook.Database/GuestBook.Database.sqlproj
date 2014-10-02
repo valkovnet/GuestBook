@@ -66,6 +66,7 @@
     <Build Include="Procedures\AddGuestRecord.sql" />
     <Build Include="Procedures\GetRecordsInfo.sql" />
     <Build Include="Procedures\GetGuestRecords.sql" />
+    <Build Include="Procedures\GetAllRecords.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GuestBook.Database.publish.xml" />

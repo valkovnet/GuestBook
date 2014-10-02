@@ -5,30 +5,33 @@
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
     xmlns:converters="clr-namespace:GuestBook.Converters"
     xmlns:Helpers="clr-namespace:GuestBook.Helpers"
-    xmlns:Controls="clr-namespace:GuestBook.Controls;assembly=GuestBook.Controls">
-    
+    xmlns:Controls="clr-namespace:GuestBook.Controls;assembly=GuestBook.Controls"
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
+
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GuestBook.Controls;component/Resources/ComboBox.xaml"/>
                 <ResourceDictionary Source="/GuestBook.Controls;component/Resources/ListBox.xaml"/>
+                <ResourceDictionary Source="/GuestBook.Controls;component/Resources/DataPager.xaml"/>
                 <ResourceDictionary Source="/GuestBook.Controls;component/Resources/CaptchaControl.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            
+
             <converters:OpositiveBooleanConverter x:Key="InvertConverter"/>
-            
+
             <DataTemplate x:Key="GuestRecords">
-                <StackPanel Orientation="Vertical" Height="Auto" Width="Auto" HorizontalAlignment="Stretch">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
                     <Border BorderThickness="0, 0, 0, 1" BorderBrush="LightGray">
                         <StackPanel Orientation="Horizontal" MinHeight="25" Height="Auto" Width="Auto" HorizontalAlignment="Stretch">
                             <TextBlock Text="{Binding Path=UserName}" FontSize="16" Foreground="Black" FontFamily="ArialBlack"/>
                             <TextBlock Text="{Binding Path=PostedDate}" Margin="100, 0, 5, 0" 
-                                       FontSize="12" Foreground="LightGray" FontFamily="Arial" TextAlignment="Right"/>
+                                       FontSize="12" Foreground="DarkGray" FontFamily="Arial" TextAlignment="Right"/>
                         </StackPanel>
                     </Border>
                     <TextBlock Text="{Binding Path=Messages}" MinHeight="50" FontSize="12" Foreground="Black" />
                 </StackPanel>
             </DataTemplate>
-        </ResourceDictionary>        
+        </ResourceDictionary>
     </UserControl.Resources>
 
     <Grid>
@@ -65,14 +68,44 @@
                 </Path.Fill>
             </Path>
 
-            <TextBlock Foreground="WhiteSmoke" HorizontalAlignment="Left" Canvas.Top="20" Canvas.Left="70" FontSize="42"
-                       FontFamily="Arial" Text="Guest Book" Height="28" VerticalAlignment="Top" />
+            <StackPanel Orientation="Horizontal" Height="120">
+
+                <TextBlock Foreground="WhiteSmoke" HorizontalAlignment="Left" FontSize="42"
+            		FontFamily="Arial" Text="Guest Book" Height="55" VerticalAlignment="Top" Width="267" />
+
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="User name sort:" Foreground="WhiteSmoke" Margin="5" VerticalAlignment="Center"/>
+                        <ComboBox IsEnabled="{Binding Path=IsProcess, Converter={StaticResource InvertConverter}}" 
+                                  Width="150" VerticalAlignment="Center" SelectedValue="{Binding Model.UserSortDirection, Mode=TwoWay}" 
+                                  DisplayMemberPath="Content" SelectedValuePath="Content">
+                            <ComboBoxItem Content="Ascending"/>
+                            <ComboBoxItem Content="Descending"/>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Date Sort:" Foreground="WhiteSmoke" Margin="5" VerticalAlignment="Center"/>
+                        <ComboBox IsEnabled="{Binding Path=IsProcess, Converter={StaticResource InvertConverter}}" 
+                                  Width="150" VerticalAlignment="Center" SelectedValue="{Binding Model.DateSortDirection, Mode=TwoWay}" 
+                                  DisplayMemberPath="Content" SelectedValuePath="Content">
+                            <ComboBoxItem Content="Ascending"/>
+                            <ComboBoxItem Content="Descending"/>
+                        </ComboBox>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+
         </Canvas>
 
-        <ListBox Margin="10" Grid.Row="2" Style="{StaticResource ListBoxStrerch}" Width="Auto"
-                 ItemsSource="{Binding Model.Records}" SelectionMode="Single"
-                 ItemTemplate="{StaticResource GuestRecords}">
-        </ListBox>
+        <StackPanel Margin="10" Grid.Row="2" Orientation="Vertical">
+            <sdk:DataPager DisplayMode="FirstLastNumeric" IsEnabled="{Binding Path=IsProcess, Converter={StaticResource InvertConverter}}" 
+                           Source="{Binding Model.RecordsCollection}" PageSize="25" />            
+                <ListBox Width="Auto" Height="400"
+                         SelectionMode="Single" ItemsSource="{Binding Path=Model.RecordsCollection}"
+                         ItemTemplate="{StaticResource GuestRecords}">
+                </ListBox>            
+        </StackPanel>
 
         <StackPanel Grid.Row="3">
             <Grid Width="500" HorizontalAlignment="Center">
@@ -84,7 +117,7 @@
                     <RowDefinition Height="60"/>
                     <RowDefinition Height="60"/>
                 </Grid.RowDefinitions>
-                
+
                 <StackPanel Orientation="Horizontal" Grid.Row="0">
                     <TextBlock Text="Name:" Width="150"/>
                     <TextBox Text="{Binding Path=Model.Username, Mode=TwoWay, ValidatesOnNotifyDataErrors=True, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" Width="300" Height="24"
@@ -123,6 +156,6 @@
                         IsEnabled="{Binding Path=IsProcess, Converter={StaticResource InvertConverter}}" Command="{Binding Model.SendProductsCommand}" Width="200" Height="30" Content="Send Message"/>
             </Grid>
         </StackPanel>
-        
+
     </Grid>
 </UserControl>

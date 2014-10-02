@@ -42,11 +42,11 @@ namespace GuestBook.TestTask
             }
         }
 
-        public List<GuestRecord> GetGuestRecords(int from, int to)
+        public List<GuestRecord> GetAllRecords()
         {
             try
             {
-                return DataProvider.GetGuestRecords(from, to);
+                return DataProvider.GetAllRecords();
             }
             catch (DatabaseException ex)
             {

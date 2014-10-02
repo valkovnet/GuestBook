@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Windows;
 using System.Windows.Browser;
+using System.Windows.Data;
 using System.Windows.Input;
 using GuestBook.Controls;
 using GuestBook.Helpers;
@@ -25,7 +27,11 @@ namespace GuestBook.Models
 
         private string _capchaValue;
 
-        private ObservableCollection<GuestRecord> _records = new ObservableCollection<GuestRecord>();
+        private string _userSortDirection;
+
+        private string _dateSortDirection;
+
+        private PagedCollectionView _pagedCollectionView;
 
         public GuestModel()
         {
@@ -39,14 +45,52 @@ namespace GuestBook.Models
 
         public event EventHandler DoSendData;   
 
-        public ICommand SendProductsCommand { get; private set; }
-
-        public ObservableCollection<GuestRecord> Records
+        public ICommand SendProductsCommand { get; private set; } 
+       
+        public PagedCollectionView RecordsCollection
         {
-            get { return this._records; }
+            get { return this._pagedCollectionView; }
             set
             {
-                this._records = value;
+                this._pagedCollectionView = value;                
+                OnCurrentPropertyChanged();
+            }
+        }
+
+        public IEnumerable<GuestRecord> Records
+        {            
+            set
+            {                
+                var collectionView = new PagedCollectionView(value);
+                collectionView.SortDescriptions.Add(new SortDescription("UserName", ListSortDirection.Ascending));
+                RecordsCollection = collectionView;
+            }
+        }
+        
+        public string UserSortDirection
+        {
+            get { return this._userSortDirection; }
+            set
+            {
+                this._userSortDirection = value;
+                RecordsCollection.SortDescriptions.Clear();
+                RecordsCollection.SortDescriptions.Add(!String.IsNullOrEmpty(value) && value == "Descending"
+                                                           ? new SortDescription("UserName", ListSortDirection.Descending)
+                                                           : new SortDescription("UserName", ListSortDirection.Ascending));
+                OnCurrentPropertyChanged();
+            }
+        }
+
+        public string DateSortDirection
+        {
+            get { return this._dateSortDirection; }
+            set
+            {
+                this._dateSortDirection = value;
+                RecordsCollection.SortDescriptions.Clear();
+                RecordsCollection.SortDescriptions.Add(!String.IsNullOrEmpty(value) && value == "Descending"
+                                                           ? new SortDescription("PostedDate", ListSortDirection.Descending)
+                                                           : new SortDescription("PostedDate", ListSortDirection.Ascending));
                 OnCurrentPropertyChanged();
             }
         }
@@ -123,8 +167,9 @@ namespace GuestBook.Models
         public void ClearData()
         {
             ClearValidators();
-            Username = Messages = Usermail = Homepage = String.Empty;
+            Username = Messages = Usermail = Homepage = CapchaText = UserSortDirection = DateSortDirection = String.Empty;
             AddAllAttributeValidators();
+            RecordsCollection.SortDescriptions.Clear();
         }
 
         public GuestRecord ToGuestRecord()

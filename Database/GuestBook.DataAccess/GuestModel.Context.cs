@@ -83,5 +83,10 @@ namespace GuestBook.DataAccess
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetGuestRecords_Result>("GetGuestRecords", fromParameter, toParameter);
         }
+    
+        public virtual ObjectResult<GetAllRecords_Result> GetAllRecords()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllRecords_Result>("GetAllRecords");
+        }
     }
 }

@@ -204,10 +204,10 @@ namespace GuestBook.ServiceReference {
         
         int EndGetRecordsInfo(System.IAsyncResult result);
         
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IGuestService/GetGuestRecords", ReplyAction="http://tempuri.org/IGuestService/GetGuestRecordsResponse")]
-        System.IAsyncResult BeginGetGuestRecords(int from, int to, System.AsyncCallback callback, object asyncState);
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IGuestService/GetAllRecords", ReplyAction="http://tempuri.org/IGuestService/GetAllRecordsResponse")]
+        System.IAsyncResult BeginGetAllRecords(System.AsyncCallback callback, object asyncState);
         
-        System.Collections.ObjectModel.ObservableCollection<GuestBook.ServiceReference.GuestRecord> EndGetGuestRecords(System.IAsyncResult result);
+        System.Collections.ObjectModel.ObservableCollection<GuestBook.ServiceReference.GuestRecord> EndGetAllRecords(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IGuestService/AddRecord", ReplyAction="http://tempuri.org/IGuestService/AddRecordResponse")]
         System.IAsyncResult BeginAddRecord(string key, GuestBook.ServiceReference.GuestRecord record, System.AsyncCallback callback, object asyncState);
@@ -240,11 +240,11 @@ namespace GuestBook.ServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class GetGuestRecordsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class GetAllRecordsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        public GetGuestRecordsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        public GetAllRecordsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
@@ -267,11 +267,11 @@ namespace GuestBook.ServiceReference {
         
         private System.Threading.SendOrPostCallback onGetRecordsInfoCompletedDelegate;
         
-        private BeginOperationDelegate onBeginGetGuestRecordsDelegate;
+        private BeginOperationDelegate onBeginGetAllRecordsDelegate;
         
-        private EndOperationDelegate onEndGetGuestRecordsDelegate;
+        private EndOperationDelegate onEndGetAllRecordsDelegate;
         
-        private System.Threading.SendOrPostCallback onGetGuestRecordsCompletedDelegate;
+        private System.Threading.SendOrPostCallback onGetAllRecordsCompletedDelegate;
         
         private BeginOperationDelegate onBeginAddRecordDelegate;
         
@@ -334,7 +334,7 @@ namespace GuestBook.ServiceReference {
         
         public event System.EventHandler<GetRecordsInfoCompletedEventArgs> GetRecordsInfoCompleted;
         
-        public event System.EventHandler<GetGuestRecordsCompletedEventArgs> GetGuestRecordsCompleted;
+        public event System.EventHandler<GetAllRecordsCompletedEventArgs> GetAllRecordsCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> AddRecordCompleted;
         
@@ -387,51 +387,47 @@ namespace GuestBook.ServiceReference {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GuestBook.ServiceReference.IGuestService.BeginGetGuestRecords(int from, int to, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginGetGuestRecords(from, to, callback, asyncState);
+        System.IAsyncResult GuestBook.ServiceReference.IGuestService.BeginGetAllRecords(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetAllRecords(callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Collections.ObjectModel.ObservableCollection<GuestBook.ServiceReference.GuestRecord> GuestBook.ServiceReference.IGuestService.EndGetGuestRecords(System.IAsyncResult result) {
-            return base.Channel.EndGetGuestRecords(result);
+        System.Collections.ObjectModel.ObservableCollection<GuestBook.ServiceReference.GuestRecord> GuestBook.ServiceReference.IGuestService.EndGetAllRecords(System.IAsyncResult result) {
+            return base.Channel.EndGetAllRecords(result);
         }
         
-        private System.IAsyncResult OnBeginGetGuestRecords(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            int from = ((int)(inValues[0]));
-            int to = ((int)(inValues[1]));
-            return ((GuestBook.ServiceReference.IGuestService)(this)).BeginGetGuestRecords(from, to, callback, asyncState);
+        private System.IAsyncResult OnBeginGetAllRecords(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return ((GuestBook.ServiceReference.IGuestService)(this)).BeginGetAllRecords(callback, asyncState);
         }
         
-        private object[] OnEndGetGuestRecords(System.IAsyncResult result) {
-            System.Collections.ObjectModel.ObservableCollection<GuestBook.ServiceReference.GuestRecord> retVal = ((GuestBook.ServiceReference.IGuestService)(this)).EndGetGuestRecords(result);
+        private object[] OnEndGetAllRecords(System.IAsyncResult result) {
+            System.Collections.ObjectModel.ObservableCollection<GuestBook.ServiceReference.GuestRecord> retVal = ((GuestBook.ServiceReference.IGuestService)(this)).EndGetAllRecords(result);
             return new object[] {
                     retVal};
         }
         
-        private void OnGetGuestRecordsCompleted(object state) {
-            if ((this.GetGuestRecordsCompleted != null)) {
+        private void OnGetAllRecordsCompleted(object state) {
+            if ((this.GetAllRecordsCompleted != null)) {
                 InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.GetGuestRecordsCompleted(this, new GetGuestRecordsCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+                this.GetAllRecordsCompleted(this, new GetAllRecordsCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
             }
         }
         
-        public void GetGuestRecordsAsync(int from, int to) {
-            this.GetGuestRecordsAsync(from, to, null);
+        public void GetAllRecordsAsync() {
+            this.GetAllRecordsAsync(null);
         }
         
-        public void GetGuestRecordsAsync(int from, int to, object userState) {
-            if ((this.onBeginGetGuestRecordsDelegate == null)) {
-                this.onBeginGetGuestRecordsDelegate = new BeginOperationDelegate(this.OnBeginGetGuestRecords);
+        public void GetAllRecordsAsync(object userState) {
+            if ((this.onBeginGetAllRecordsDelegate == null)) {
+                this.onBeginGetAllRecordsDelegate = new BeginOperationDelegate(this.OnBeginGetAllRecords);
             }
-            if ((this.onEndGetGuestRecordsDelegate == null)) {
-                this.onEndGetGuestRecordsDelegate = new EndOperationDelegate(this.OnEndGetGuestRecords);
+            if ((this.onEndGetAllRecordsDelegate == null)) {
+                this.onEndGetAllRecordsDelegate = new EndOperationDelegate(this.OnEndGetAllRecords);
             }
-            if ((this.onGetGuestRecordsCompletedDelegate == null)) {
-                this.onGetGuestRecordsCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetGuestRecordsCompleted);
+            if ((this.onGetAllRecordsCompletedDelegate == null)) {
+                this.onGetAllRecordsCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetAllRecordsCompleted);
             }
-            base.InvokeAsync(this.onBeginGetGuestRecordsDelegate, new object[] {
-                        from,
-                        to}, this.onEndGetGuestRecordsDelegate, this.onGetGuestRecordsCompletedDelegate, userState);
+            base.InvokeAsync(this.onBeginGetAllRecordsDelegate, null, this.onEndGetAllRecordsDelegate, this.onGetAllRecordsCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -569,17 +565,15 @@ namespace GuestBook.ServiceReference {
                 return _result;
             }
             
-            public System.IAsyncResult BeginGetGuestRecords(int from, int to, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[2];
-                _args[0] = from;
-                _args[1] = to;
-                System.IAsyncResult _result = base.BeginInvoke("GetGuestRecords", _args, callback, asyncState);
+            public System.IAsyncResult BeginGetAllRecords(System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[0];
+                System.IAsyncResult _result = base.BeginInvoke("GetAllRecords", _args, callback, asyncState);
                 return _result;
             }
             
-            public System.Collections.ObjectModel.ObservableCollection<GuestBook.ServiceReference.GuestRecord> EndGetGuestRecords(System.IAsyncResult result) {
+            public System.Collections.ObjectModel.ObservableCollection<GuestBook.ServiceReference.GuestRecord> EndGetAllRecords(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                System.Collections.ObjectModel.ObservableCollection<GuestBook.ServiceReference.GuestRecord> _result = ((System.Collections.ObjectModel.ObservableCollection<GuestBook.ServiceReference.GuestRecord>)(base.EndInvoke("GetGuestRecords", _args, result)));
+                System.Collections.ObjectModel.ObservableCollection<GuestBook.ServiceReference.GuestRecord> _result = ((System.Collections.ObjectModel.ObservableCollection<GuestBook.ServiceReference.GuestRecord>)(base.EndInvoke("GetAllRecords", _args, result)));
                 return _result;
             }
             
